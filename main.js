@@ -1,5 +1,5 @@
 import { ROOT_DIV } from "./constant.js";
-import * as piece from "../data/pieces.js";
+import * as piece from "./data/pieces.js";
 import { globalState } from "./script.js";
 import { movePiecFromXToY } from "./globalevent.js";
 
