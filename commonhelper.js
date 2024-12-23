@@ -19,6 +19,16 @@ function checkPieceofOpponentOnElement(id, color) {
     return false;
 }
 
+//function to check whether piece exists or not by square id
+function checkWhetherPieceExistsOrNot(squareId){
+  const square = keySquareMapper[squareId];
+
+  if (square.piece) {
+      return square;
+  }else{
+    return false;
+  }
+}
 //function to check capture id square
 function checkSquareCaptureId(array) {
     let returnArray = [];
@@ -113,5 +123,6 @@ function giveBishopHighlightIds(id) {
 export { 
     checkPieceofOpponentOnElement,
      checkSquareCaptureId, 
-     giveBishopHighlightIds 
+     giveBishopHighlightIds ,
+     checkWhetherPieceExistsOrNot
     };

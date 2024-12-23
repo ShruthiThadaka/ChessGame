@@ -9,14 +9,14 @@ function blackPawn(current_position){
 function blackBishop(current_position){
     return {
         current_position,
-        img:"Assets/black/bishop.png",
+        img:"./bishop.png",
         piece_name:"black_bishop"
     };
 }
 function blackKing(current_position){
     return {
         current_position,
-        img:"Assets/black/king.png",
+        img:"./king.png",
         piece_name:"black_king"
     };
 }
