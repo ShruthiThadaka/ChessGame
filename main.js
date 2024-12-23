@@ -1,6 +1,6 @@
 import { ROOT_DIV } from "./constant.js";
 import * as piece from "../data/pieces.js";
-import { globalState } from "./index.js";
+import { globalState } from "./script.js";
 import { movePiecFromXToY } from "./globalevent.js";
 
 //funnction globalstate render(this function is useful to render pieces from globalstatedata)=>use when updating globalstate

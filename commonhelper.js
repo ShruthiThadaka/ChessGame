@@ -1,5 +1,5 @@
-import { globalState } from "./index.js";
-import { keySquareMapper } from "./index.js";
+import { globalState } from "./script.js";
+import { keySquareMapper } from "./script.js";
 
 //function to check if piece exists of opponent
 function checkPieceofOpponentOnElement(id, color) {

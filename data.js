@@ -1,5 +1,5 @@
 import { renderHighlight } from "./main.js";
-import { globalState } from "./index.js";
+import { globalState } from "./script.js";
 
 // for each square
 function Square(color, id, piece) {
