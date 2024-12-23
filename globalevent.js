@@ -115,80 +115,191 @@ function whitePawnClick(square) {
     // console.log(globalState)
 }
 
-//white bishop event 
-function whiteBishopClick(square) {
-    //clear board for any previous highlight
 
+// white bishop event
+function whiteBishopClick(square) {
     const piece = square.piece;
 
-    //if clicked on same element twice
     if (piece == selfHighlightState) {
         clearPreviousSelfHighlight(selfHighlightState);
         clearHighlightLocal();
         return;
     }
+
     if (square.captureHighlight) {
-        // movePiecFromXToY(selfHighlightState,piece)
-        // console.log(piece)
+        // movePieceFromXToY();
         moveElement(selfHighlightState, piece.current_position);
         clearPreviousSelfHighlight(selfHighlightState);
         clearHighlightLocal();
         return;
-    };
-    //clear all highlights
-    clearPreviousSelfHighlight(selfHighlightState)
+    }
+
+    // clear all highlights
+    clearPreviousSelfHighlight(selfHighlightState);
     clearHighlightLocal();
 
-    //highlighting logic
+    // highlighting logic
     selfHighlight(piece);
     hightlight_state = true;
     selfHighlightState = piece;
 
-    //add piece as move state
+    // add piece as move state
     moveState = piece;
 
     const current_pos = piece.current_position;
     const flatArray = globalState.flat();
 
-    let highlightSquareIds = giveBishopHighlightIds(current_pos);
+    let hightlightSquareIds = giveBishopHighlightIds(current_pos);
+    let temp = [];
 
-    const {bottomLeft,topLeft,bottomRight,topRight} = highlightSquareIds;
-    
-    highlightSquareIds = checkSquareCaptureId(highlightSquareIds);
+    const { bottomLeft, topLeft, bottomRight, topRight } = hightlightSquareIds;
 
-    highlightSquareIds.forEach((hightlight) => {
+    let result = [];
+    result.push(checkSquareCaptureId(bottomLeft));
+    result.push(checkSquareCaptureId(topLeft));
+    result.push(checkSquareCaptureId(bottomRight));
+    result.push(checkSquareCaptureId(topRight));
+
+    // insert into temp
+    temp.push(bottomLeft);
+    temp.push(topLeft);
+    temp.push(bottomRight);
+    temp.push(topRight);
+
+    // hightlightSquareIds = checkSquareCaptureId(hightlightSquareIds);
+    hightlightSquareIds = result.flat();
+
+    hightlightSquareIds.forEach((hightlight) => {
         const element = keySquareMapper[hightlight];
         element.highlight = true;
-    })
+    });
 
-    highlightSquareIds.forEach((hightlight) => {
-        const element = keySquareMapper[hightlight];
-        element.highlight = true;
-    })
-    const col1 = `${String.fromCharCode(current_pos[0].charCodeAt(0) - 1)}${Number(current_pos[1]) + 1}`;
-    const col2 = `${String.fromCharCode(current_pos[0].charCodeAt(0) + 1)}${Number(current_pos[1]) + 1}`;
+    let captureIds = [];
 
-    let captureIds = [col1, col2];
-    // captureIds = checkSquareCaptureId(captureIds)
+    for (let index = 0; index < temp.length; index++) {
+        const arr = temp[index];
 
-    highlightSquareIds = [
-        `${current_pos[0]}${Number(current_pos[1]) + 1}`,
-    ];
+        for (let j = 0; j < arr.length; j++) {
+            const element = arr[j];
 
-    captureIds.forEach((element) => {
-        checkPieceofOpponentOnElement(element, "white")
-    })
+            // let checkPieceResult = checkWeatherPieceExistsOrNot(element);
+            // if (
+            //   checkPieceResult &&
+            //   checkPieceResult.piece &&
+            //   checkPieceResult.piece.piece_name.toLowerCase().includes("white")
+            // ) {
+            //   break;
+            // }
 
-    highlightSquareIds.forEach((hightlight) => {
-        const element = keySquareMapper[hightlight];
-        element.highlight = true;
-    })
+            // if (checkPieceOfOpponentOnElement(element, "white")) {
+            //   break;
+            // }
+        }
+    }
+
+    // let captureIds = [col1, col2];
+    // console.log(captureIds);
+    // // captureIds = checkSquareCaptureId(captureIds);
+
+    // captureIds.forEach((element) => {
+    //   checkPieceOfOpponentOnElement(element, "white");
+    // });
+
     globalStateRender();
-
-    
 }
-    // console.log(globalState)
+// console.log(globalState)
 
+//black bishop event
+function blackBishopClick(square) {
+    const piece = square.piece;
+
+    if (piece == selfHighlightState) {
+        clearPreviousSelfHighlight(selfHighlightState);
+        clearHighlightLocal();
+        return;
+    }
+
+    if (square.captureHighlight) {
+        // movePieceFromXToY();
+        moveElement(selfHighlightState, piece.current_position);
+        clearPreviousSelfHighlight(selfHighlightState);
+        clearHighlightLocal();
+        return;
+    }
+
+    // clear all highlights
+    clearPreviousSelfHighlight(selfHighlightState);
+    clearHighlightLocal();
+
+    // highlighting logic
+    selfHighlight(piece);
+    hightlight_state = true;
+    selfHighlightState = piece;
+
+    // add piece as move state
+    moveState = piece;
+
+    const current_pos = piece.current_position;
+    const flatArray = globalState.flat();
+
+    let hightlightSquareIds = giveBishopHighlightIds(current_pos);
+    let temp = [];
+
+    const { bottomLeft, topLeft, bottomRight, topRight } = hightlightSquareIds;
+
+    let result = [];
+    result.push(checkSquareCaptureId(bottomLeft));
+    result.push(checkSquareCaptureId(topLeft));
+    result.push(checkSquareCaptureId(bottomRight));
+    result.push(checkSquareCaptureId(topRight));
+
+    // insert into temp
+    temp.push(bottomLeft);
+    temp.push(topLeft);
+    temp.push(bottomRight);
+    temp.push(topRight);
+
+    // hightlightSquareIds = checkSquareCaptureId(hightlightSquareIds);
+    hightlightSquareIds = result.flat();
+
+    hightlightSquareIds.forEach((hightlight) => {
+        const element = keySquareMapper[hightlight];
+        element.highlight = true;
+    });
+
+    let captureIds = [];
+
+    for (let index = 0; index < temp.length; index++) {
+        const arr = temp[index];
+
+        for (let j = 0; j < arr.length; j++) {
+            const element = arr[j];
+
+            // let checkPieceResult = checkWeatherPieceExistsOrNot(element);
+            // if (
+            //   checkPieceResult &&
+            //   checkPieceResult.piece &&
+            //   checkPieceResult.piece.piece_name.toLowerCase().includes("white")
+            // ) {
+            //   break;
+            // }
+
+            // if (checkPieceOfOpponentOnElement(element, "white")) {
+            //   break;
+            // }
+        }
+    }
+
+    // let captureIds = [col1, col2];
+    // console.log(captureIds);
+    // // captureIds = checkSquareCaptureId(captureIds);
+
+    // captureIds.forEach((element) => {
+    //   checkPieceOfOpponentOnElement(element, "white");
+    // });
+
+    globalStateRender();
+}
 
 //black pawn function
 function blackPawnClick(square) {
@@ -360,6 +471,8 @@ function GlobalEvent() {
                 blackPawnClick(square);
             } else if (square.piece.piece_name == "white_bishop") {
                 whiteBishopClick(square);
+            } else if(square.piece.piece_name == "black_bishop"){
+                blackBishopClick(square);
             }
         }
         else {

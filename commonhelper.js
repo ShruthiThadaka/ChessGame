@@ -36,84 +36,79 @@ function checkSquareCaptureId(array) {
     return returnArray;
 }
 
-//function to give highlight ids for bishop
+
+// function to give highlight ids for bishop
 function giveBishopHighlightIds(id) {
-
     let finalReturnArray = [];
-
-    //wil give top left id
+  
+    // will give top left id
     function topLeft(id) {
-
-        let alpha = id[0];
-        let num = Number(id[1]);
-        let resultArray = [];
-
-        while (alpha != "a" || num != 8) {
-            alpha = String.fromCharCode(alpha.charCodeAt(0) - 1)
-            num = num + 1;
-           resultArray.push(`${alpha}${num}`);
-        }
-
-        return resultArray;
+      let alpha = id[0];
+      let num = Number(id[1]);
+      let resultArray = [];
+  
+      while (alpha != "a" && num != 8) {
+        alpha = String.fromCharCode(alpha.charCodeAt(0) - 1);
+        num = num + 1;
+        resultArray.push(`${alpha}${num}`);
+      }
+  
+      return resultArray;
     }
-
-    //will give bottom left ids
+  
+    // find bottom left ids
     function bottomLeft(id) {
-        let alpha = id[0];
-        let num = Number(id[1]);
-        let resultArray = [];
-
-        while (alpha != "a" || num != 1) {
-            alpha = String.fromCharCode(alpha.charCodeAt(0) - 1)
-            num = num - 1;
-           resultArray.push(`${alpha}${num}`);
-        }
-
-        return resultArray;
-      
+      let alpha = id[0];
+      let num = Number(id[1]);
+      let resultArray = [];
+  
+      while (alpha != "a" && num != 1) {
+        alpha = String.fromCharCode(alpha.charCodeAt(0) - 1);
+        num = num - 1;
+        resultArray.push(`${alpha}${num}`);
+      }
+  
+      return resultArray;
     }
-
-    //will give topright ids
+  
+    // find top right ids
     function topRight(id) {
-
-        let alpha = id[0];
-        let num = Number(id[1]);
-        let resultArray = [];
-
-        while (alpha != "h" || num != 8) {
-            alpha = String.fromCharCode(alpha.charCodeAt(0) + 1)
-            num = num + 1;
-           resultArray.push(`${alpha}${num}`);
-        }
-
-        return resultArray;
-       
+      let alpha = id[0];
+      let num = Number(id[1]);
+      let resultArray = [];
+  
+      while (alpha != "h" && num != 8) {
+        alpha = String.fromCharCode(alpha.charCodeAt(0) + 1);
+        num = num + 1;
+        resultArray.push(`${alpha}${num}`);
+      }
+  
+      return resultArray;
     }
-
-    //will give bottom right ids
+  
+    // find bottom right ids
     function bottomRight(id) {
-
-        let alpha = id[0];
-        let num = Number(id[1]);
-        let resultArray = [];
-
-        while (alpha != "h" || num != 1) {
-            alpha = String.fromCharCode(alpha.charCodeAt(0) + 1)
-            num = num - 1;
-           resultArray.push(`${alpha}${num}`);
-        }
-
-        return resultArray;
-        
+      let alpha = id[0];
+      let num = Number(id[1]);
+      let resultArray = [];
+  
+      while (alpha != "h" && num != 1) {
+        alpha = String.fromCharCode(alpha.charCodeAt(0) + 1);
+        num = num - 1;
+        resultArray.push(`${alpha}${num}`);
+      }
+  
+      return resultArray;
     }
-    
+   console.log(topLeft(id))
     return {
-        topLeft:topLeft(id),
-        bottomLeft:bottomLeft(id),
-        topRight:topRight(id),
-        bottomRight:bottomRight(id),
+      topLeft: topLeft(id),
+      bottomLeft: bottomLeft(id),
+      topRight: topRight(id),
+      bottomRight: bottomRight(id),
     };
-}
+  }
+  
 
 export { 
     checkPieceofOpponentOnElement,
