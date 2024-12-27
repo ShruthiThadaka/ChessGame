@@ -1,5 +1,6 @@
 import { ROOT_DIV } from "./constant.js";
 import { globalState, keySquareMapper } from "./script.js";
+import { renderHighlight } from "./main.js";
 import { clearHightlight } from "./main.js";
 import { selfHighlight } from "./main.js";
 import { globalStateRender } from "./main.js";
