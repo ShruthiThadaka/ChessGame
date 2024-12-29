@@ -131,27 +131,101 @@ function giveBishopHighlightIds(id) {
   };
 }
 
-function giveBishopCaptureIds(id) {
-  let result = giveRookHighlightIds(id);
-  result = Object.values(result).flat();
-  result = result.filter(element => {
-    if(checkPieceOfOpponentOnElementNoDom(element,"black")){
-      return true
+function giveBishopCaptureIds(id, color) {
+
+  if(!id){
+    return [];
+  }
+
+  let hightlightSquareIds = giveBishopHighlightIds(id);
+  let temp = [];
+
+  const { bottomLeft, topLeft, bottomRight, topRight } = hightlightSquareIds;
+  let returnArr = [];
+
+  // insert into temp
+  temp.push(bottomLeft);
+  temp.push(topLeft);
+  temp.push(bottomRight);
+  temp.push(topRight);
+
+  for (let index = 0; index < temp.length; index++) {
+    const arr = temp[index];
+
+    for (let j = 0; j < arr.length; j++) {
+      const element = arr[j];
+
+      let checkPieceResult = checkWhetherPieceExistsOrNot(element);
+      if (
+        checkPieceResult &&
+        checkPieceResult.piece &&
+        checkPieceResult.piece.piece_name.toLowerCase().includes(color)
+      ) {
+        break;
+      }
+
+      if (checkPieceOfOpponentOnElementNoDom(element, color)) {
+        returnArr.push(element)
+        break;
+      }
     }
-  })
-  return result;
+  }
+  return returnArr;
 }
 
 //function to give highlight ids for rook
-function giveRookCaptureIds(id) {
-  let result = giveBishopHighlightIds(id);
-  result = Object.values(result).flat();
-  result = result.filter(element => {
-    if(checkPieceOfOpponentOnElementNoDom(element,"black")){
-      return true
+function giveRookCaptureIds(id,color) {
+
+  if(!id){
+    return [];
+  }
+
+  let hightlightSquareIds = giveRookHighlightIds(id);
+  let temp = [];
+
+  const { bottom, top, right, left } = hightlightSquareIds;
+  let returnArr = [];
+
+  // insert into temp
+  temp.push(bottom);
+  temp.push(top);
+  temp.push(right);
+  temp.push(left);
+
+  for (let index = 0; index < temp.length; index++) {
+    const arr = temp[index];
+
+    for (let j = 0; j < arr.length; j++) {
+      const element = arr[j];
+
+      let checkPieceResult = checkWhetherPieceExistsOrNot(element);
+      if (
+        checkPieceResult &&
+        checkPieceResult.piece &&
+        checkPieceResult.piece.piece_name.toLowerCase().includes(color)
+      ) {
+        break;
+      }
+
+      if (checkPieceOfOpponentOnElementNoDom(element, color)) {
+        returnArr.push(element)
+        break;
+      }
     }
-  })
-  return result;
+  }
+  return returnArr;
+}
+
+function giveQueenCaptureIds(id,color) {
+
+  if(!id){
+    return [];
+  }
+  
+  let returnArr = [];
+  returnArr.push(giveBishopCaptureIds(id,color))
+  returnArr.push(giveRookCaptureIds(id,color))
+  return returnArr.flat();
 }
 
 function giveRookHighlightIds(id) {
@@ -224,9 +298,10 @@ function giveRookHighlightIds(id) {
     left: left(id),
   };
 }
+
 //function to give highlight ids for knight
 function giveKnightHighlightIds(id) {
-  if(!id){
+  if (!id) {
     return;
   }
   function left() {
@@ -294,7 +369,7 @@ function giveKnightHighlightIds(id) {
       }
       if (alpha != "a") {
         let alpha2 = String.fromCharCode(alpha.charCodeAt(0) - 1);
-        finalReturnArray.push(`${alpha2}${number}`)      
+        finalReturnArray.push(`${alpha2}${number}`)
       }
       return finalReturnArray;
       // resultArray.push(`${Number(lastElement[1])}`)
@@ -332,7 +407,7 @@ function giveKnightHighlightIds(id) {
       }
       if (alpha != "a") {
         let alpha2 = String.fromCharCode(alpha.charCodeAt(0) - 1);
-        finalReturnArray.push(`${alpha2}${number}`)      
+        finalReturnArray.push(`${alpha2}${number}`)
       }
       return finalReturnArray;
       // resultArray.push(`${Number(lastElement[1])}`)
@@ -376,18 +451,18 @@ function giveKnightHighlightIds(id) {
     }
   }
 
-  return [...top(),...right(),...bottom(),...left()]
+  return [...top(), ...right(), ...bottom(), ...left()]
 }
 
-function giveKnightCaptureIds(id) {
-  if(!id){
-    return;
+function giveKnightCaptureIds(id, color) {
+  if (!id) {
+    return [];
   }
 
-let returnArr = giveKnightHighlightIds(id,color);
+  let returnArr = giveKnightHighlightIds(id, color);
 
   returnArr = returnArr.filter(element => {
-    if(checkPieceOfOpponentOnElementNoDom(element,"black")){
+    if (checkPieceOfOpponentOnElementNoDom(element, color)) {
       return true;
     }
   })
@@ -396,55 +471,60 @@ let returnArr = giveKnightHighlightIds(id,color);
 
 
 //function to give highlight ids for queen
-function giveQueenHighlightIds(id){
+function giveQueenHighlightIds(id) {
   const rookMoves = giveRookHighlightIds(id)
   const bishopMoves = giveBishopHighlightIds(id)
   return {
-    "left":rookMoves.left,
-    "right":rookMoves.right,
-    "top":rookMoves.top,
-    "bottom":rookMoves.bottom,
-    "topLeft":bishopMoves.topLeft,
-    "topRight":bishopMoves.topRight,
-    "bottomLeft":bishopMoves.bottomLeft,
-    "bottomRight":bishopMoves.bottomRight
+    "left": rookMoves.left,
+    "right": rookMoves.right,
+    "top": rookMoves.top,
+    "bottom": rookMoves.bottom,
+    "topLeft": bishopMoves.topLeft,
+    "topRight": bishopMoves.topRight,
+    "bottomLeft": bishopMoves.bottomLeft,
+    "bottomRight": bishopMoves.bottomRight
   }
 }
 
 //function to give highlight ids for queen
-function giveKingHighlightIds(id){
+function giveKingHighlightIds(id) {
   const rookMoves = giveRookHighlightIds(id)
   const bishopMoves = giveBishopHighlightIds(id)
   const returnResult = {
-    "left":rookMoves.left,
-    "right":rookMoves.right,
-    "top":rookMoves.top,
-    "bottom":rookMoves.bottom,
-    "topLeft":bishopMoves.topLeft,
-    "topRight":bishopMoves.topRight,
-    "bottomLeft":bishopMoves.bottomLeft,
-    "bottomRight":bishopMoves.bottomRight
+    "left": rookMoves.left,
+    "right": rookMoves.right,
+    "top": rookMoves.top,
+    "bottom": rookMoves.bottom,
+    "topLeft": bishopMoves.topLeft,
+    "topRight": bishopMoves.topRight,
+    "bottomLeft": bishopMoves.bottomLeft,
+    "bottomRight": bishopMoves.bottomRight
   }
 
   for (const key in returnResult) {
     if (Object.prototype.hasOwnProperty.call(returnResult, key)) {
       const element = returnResult[key];
 
-      if(element.length != 0){
+      if (element.length != 0) {
         returnResult[key] = new Array(element[0]);
       }
-      
+
     }
   }
 
   return returnResult;
 }
 
-function giveKingCaptureIds(id,color){
+function giveKingCaptureIds(id, color) {
+
+  if(!id) {
+    return [];
+  }
+
   let result = giveKingHighlightIds(id);
   result = Object.values(result).flat();
-  result = result.filter(element=>{
-    if(checkPieceOfOpponentOnElementNoDom(element,"black")){
+  result = result.filter(element => {
+    if (checkPieceOfOpponentOnElementNoDom(element, color)) {
       return true;
     }
   })
@@ -462,6 +542,7 @@ export {
   giveKnightCaptureIds,
   giveKingCaptureIds,
   giveBishopCaptureIds,
-  giveRookCaptureIds
+  giveRookCaptureIds,
+  giveQueenCaptureIds
 
 };

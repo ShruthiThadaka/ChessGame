@@ -6,26 +6,25 @@ import { globalState } from "./script.js";
 const globalPiece = new Object();
 
 //funnction globalstate render(this function is useful to render pieces from globalstatedata)=>use when updating globalstate
-function globalStateRender(){
-
-    globalState.forEach((row)=>{
-        row.forEach((element)=>{
-
-            if(element.highlight){
-                const highlightSpan = document.createElement("span");
-                highlightSpan.classList.add("highlight");
-                document.getElementById(element.id).appendChild(highlightSpan);
-            }
-            else if(element.highlight === null){
-                const el= document.getElementById(element.id);
-                const highlights = Array.from(el.getElementsByTagName("span"));
-                highlights.forEach((element)=>{
-                    el.removeChild(element);
-                })
-            }
-        })
-    })
-}
+function globalStateRender() {
+    globalState.forEach((row) => {
+      row.forEach((element) => {
+        if (element.highlight) {
+          const hightlightSpan = document.createElement("span");
+          hightlightSpan.classList.add("highlight");
+          document.getElementById(element.id).appendChild(hightlightSpan);
+          // } else if (element.highlight === null) {
+        } else {
+          const el = document.getElementById(element.id);
+          const highlights = Array.from(el.getElementsByTagName("span"));
+          highlights.forEach((element) => {
+            el.removeChild(element);
+          });
+          // document.getElementById(element.id).innerHTML = "";
+        }
+      });
+    });
+  }
 
 
 function selfHighlight(piece) {
@@ -180,7 +179,7 @@ function clearHightlight(){
 
     const flatData = globalState.flat();
    flatData.forEach((el)=>{
-    if(el.clearHightlight){
+    if(el.captureHighlight){
         document.getElementById(el.id).classList.remove("captureColor");
         el.captureHighlight = false;
     }
