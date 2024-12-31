@@ -26,8 +26,35 @@ import pawnPromotion from "./modalCreator.js";
 let hightlight_state = false;
 let inTurn = "white";
 
+
 function changeTurn() {
+    const turnIndicator = document.getElementById("turn-indicator");
+   
     inTurn = inTurn === "white" ? "black" : "white";
+    if (turnIndicator) {
+        turnIndicator.textContent = `It is ${inTurn.charAt(0).toUpperCase() + inTurn.slice(1)}'s turn`;
+    }
+    
+}
+
+function checkForKingCapture() {
+    const whiteKingPosition = globalPiece.white_king.current_position;
+    const blackKingPosition = globalPiece.black_king.current_position;
+
+    if (!whiteKingPosition) {
+        alert("Game Over! Black wins by capturing the White King.");
+        endGame("black"); // Function to handle game end
+    } else if (!blackKingPosition) {
+        alert("Game Over! White wins by capturing the Black King.");
+        endGame("white"); // Function to handle game end
+    }
+}
+
+function endGame(winner) {
+    // Perform any cleanup or game-ending logic
+    console.log(`Game ended. ${winner} wins!`);
+    // Redirect to a summary page, restart the game, or exit as needed
+    // Example: window.location.reload(); // Restart the game
 }
 
 function checkForCheck() {
@@ -91,6 +118,76 @@ function checkForCheck() {
         }
     }
 }
+
+// function checkForOwnCheck(newPosition, pieceMoved) {
+//     const currentTurn = inTurn; // Who is making the move
+//     const opponentTurn = currentTurn === "black" ? "white" : "black";
+
+//     // Get current king's position based on the turn
+//     const kingCurrentPosition =
+//         currentTurn === "black"
+//             ? globalPiece.black_king.current_position
+//             : globalPiece.white_king.current_position;
+
+//     // Temporarily update the piece's position
+//     const originalPosition = pieceMoved.current_position;
+//     piece.current_position = newPosition;
+
+//     // Get all possible attack positions of the opponent
+//     const opponentPieces = [
+//         globalPiece[`${opponentTurn}_knight_1`],
+//         globalPiece[`${opponentTurn}_knight_2`],
+//         globalPiece[`${opponentTurn}_king`],
+//         globalPiece[`${opponentTurn}_bishop_1`],
+//         globalPiece[`${opponentTurn}_bishop_2`],
+//         globalPiece[`${opponentTurn}_rook_1`],
+//         globalPiece[`${opponentTurn}_rook_2`],
+//         globalPiece[`${opponentTurn}_queen`],
+//     ];
+
+//     let opponentAttackPositions = [];
+//     opponentPieces.forEach((piece) => {
+//         if (piece.current_position) {
+//             if (piece.type === "knight") {
+//                 opponentAttackPositions.push(
+//                     ...giveKnightCaptureIds(piece.current_position, opponentTurn)
+//                 );
+//             } else if (piece.type === "king") {
+//                 opponentAttackPositions.push(
+//                     ...giveKingCaptureIds(piece.current_position, opponentTurn)
+//                 );
+//             } else if (piece.type === "bishop") {
+//                 opponentAttackPositions.push(
+//                     ...giveBishopCaptureIds(piece.current_position, opponentTurn)
+//                 );
+//             } else if (piece.type === "rook") {
+//                 opponentAttackPositions.push(
+//                     ...giveRookCaptureIds(piece.current_position, opponentTurn)
+//                 );
+//             } else if (piece.type === "queen") {
+//                 opponentAttackPositions.push(
+//                     ...giveQueenCaptureIds(piece.current_position, opponentTurn)
+//                 );
+//             }
+//         }
+//     });
+
+//     // Flatten attack positions
+//     opponentAttackPositions = opponentAttackPositions.flat();
+
+//     // Check if the king's current position is under attack
+//     const isCheck = opponentAttackPositions.includes(
+//         currentTurn === "black" ? kingCurrentPosition : newPosition
+//     );
+
+//     // Revert the piece's position back to original
+//     pieceMoved.current_position = originalPosition;
+
+//     if (isCheck) {
+//         alert(`${currentTurn} king is in check!`);
+//     }
+// }
+
 
 function captureInTurn(square) {
     const piece = square.piece;
@@ -168,9 +265,6 @@ function moveElement(piece, id, castle) {
         }
     }
 
-    // logMoves({from: piece.current_position,to:id,piece:piece.piece_name},inTurn)
-    // pawnPromotion("white");
-
     const flatData = globalState.flat();
     // console.log(piece)
     flatData.forEach((el) => {
@@ -184,6 +278,7 @@ function moveElement(piece, id, castle) {
             el.piece = piece;
         }
     });
+
     clearHightlight();
     const previousPiece = document.getElementById(piece.current_position);
     piece.current_position = null;
@@ -195,13 +290,16 @@ function moveElement(piece, id, castle) {
     if (pawnIsPromoted) {
         pawnPromotion(inTurn, test, id)
     }
+    checkForKingCapture()
     checkForCheck();
     if(!castle){
         changeTurn();
     }
 
+
     // globalStateRender();
 }
+
 
 //current self highlighted piece square state
 let selfHighlightState = null;

@@ -7,8 +7,6 @@ function checkPieceofOpponentOnElement(id, color) {
 
   const element = keySquareMapper[id];
 
-  if (!element) return false;
-
   if (element.piece && element.piece.piece_name.includes(opponentColor)) {
     const el = document.getElementById(id);
     el.classList.add("captureColor");
@@ -36,13 +34,14 @@ function checkPieceOfOpponentOnElementNoDom(id, color) {
 //function to check whether piece exists or not by square id
 function checkWhetherPieceExistsOrNot(squareId) {
   const square = keySquareMapper[squareId];
-
   if (square.piece) {
     return square;
   } else {
     return false;
   }
+
 }
+
 // function to check capture id square
 function checkSquareCaptureId(array) {
   let returnArray = [];
@@ -133,7 +132,7 @@ function giveBishopHighlightIds(id) {
 
 function giveBishopCaptureIds(id, color) {
 
-  if(!id){
+  if (!id) {
     return [];
   }
 
@@ -174,9 +173,9 @@ function giveBishopCaptureIds(id, color) {
 }
 
 //function to give highlight ids for rook
-function giveRookCaptureIds(id,color) {
+function giveRookCaptureIds(id, color) {
 
-  if(!id){
+  if (!id) {
     return [];
   }
 
@@ -216,15 +215,15 @@ function giveRookCaptureIds(id,color) {
   return returnArr;
 }
 
-function giveQueenCaptureIds(id,color) {
+function giveQueenCaptureIds(id, color) {
 
-  if(!id){
+  if (!id) {
     return [];
   }
-  
+
   let returnArr = [];
-  returnArr.push(giveBishopCaptureIds(id,color))
-  returnArr.push(giveRookCaptureIds(id,color))
+  returnArr.push(giveBishopCaptureIds(id, color))
+  returnArr.push(giveRookCaptureIds(id, color))
   return returnArr.flat();
 }
 
@@ -517,7 +516,7 @@ function giveKingHighlightIds(id) {
 
 function giveKingCaptureIds(id, color) {
 
-  if(!id) {
+  if (!id) {
     return [];
   }
 

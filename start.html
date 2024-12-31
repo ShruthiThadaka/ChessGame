@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Button</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            background-image: url("https://images.pexels.com/photos/277124/pexels-photo-277124.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        #btn {
+            padding: 20px 40px;
+            font-size: 18px;
+            /* background-color: #00ff11; */
+            background-color: #00b34e;
+
+            color: red;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #btn:hover {
+            /* background-color: #00b34e; */
+            background-color: #00ff11;
+            transform: scale(1.1);
+            color: black;
+        }
+
+    </style>
+</head>
+<body>
+    <button id="btn">Start</button>
+    <script>
+        const btn = document.getElementById("btn");
+        btn.addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
+    </script>
+</body>
+</html>

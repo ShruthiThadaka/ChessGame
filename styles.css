@@ -96,3 +96,94 @@ body {
     border: 5px solid yellow;
     cursor: pointer;
 }
+
+#restart {
+    display: block !important;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #769656;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#restart:hover {
+    background-color: #5a7a47;
+}
+/* Mini Desktop View (1024px to 1280px) */
+@media (max-width: 1280px) {
+    body {
+        gap: 2vw;
+        padding: 10px;
+    }
+
+    .square {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* #move_logger {
+        width: 25vw;
+        height: 50px;
+    } */
+
+   
+    
+}
+
+/* Tablet View (768px and below) */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column; /* Stacks elements vertically */
+        align-items: center;
+    }
+
+    .square {
+        width: 60px;
+        height: 60px;
+    }
+
+    #move_logger {
+        width: 90%;
+        height: auto;
+        margin-top: 10px;
+    }
+
+    #restart {
+        margin-top: 10px;
+        align-self: center; /* Center the button for tablet view */
+    }
+}
+
+/* Mobile View (480px and below) */
+@media (max-width: 480px) {
+    body {
+        flex-direction: column; /* Stacks elements vertically */
+        padding: 10px;
+        align-items: center;
+    }
+
+    .square {
+        width: 50px;
+        height: 50px;
+    }
+
+    #move_logger {
+        width: 100%;
+        height: auto;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    #restart {
+        width: 100%;
+        padding: 15px 0;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+}

@@ -191,6 +191,7 @@ function clearHightlight(){
    })
 }
 
+
 export { 
     initGameRender,
     renderHighlight,
