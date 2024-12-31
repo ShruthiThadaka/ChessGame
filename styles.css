@@ -52,6 +52,7 @@ body {
 .d-flex{
     display: flex;
     justify-content: center;
+    /* text-align: center; */
 }
 
 #move_logger{
@@ -115,6 +116,45 @@ body {
 #restart:hover {
     background-color: #5a7a47;
 }
+
+.winner{
+    position: absolute;
+    color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0%;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+/* #turn-indicator {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+} */
+
+#turn-indicator.white-turn {
+    background-color: #f9f9f9;
+    color: #000000 !important;
+    border: 2px solid #dddddd;
+}
+
+#turn-indicator.black-turn {
+    background-color: #333333;
+    color: #ffffff;
+    border: 2px solid #555555;
+}
+
 /* Mini Desktop View (1024px to 1280px) */
 @media (max-width: 1280px) {
     body {

@@ -17,30 +17,8 @@ GlobalEvent();
 
 document.getElementById("restart").addEventListener("click", () => {
 
-
-    // // Reinitialize the global state
-    // const initialState = initGame(); // Get the initial board state.
-    // globalState.board = initialState; // Update the global state.
-
-    // // Re-render the board and pieces
-    // initGameRender(globalState);
-    // GlobalEvent()
-
-    ROOT_DIV.innerText = ""
-    const globalState = initGame(); //we are getting the data
-    let keySquareMapper = {};
-
-    globalState.flat().forEach((square) => {
-        keySquareMapper[square.id] = square;
-    })
-
-    initGameRender(globalState);
-
-    GlobalEvent();
     window.location.reload()
 })
-
-
 
 export { globalState, keySquareMapper };
 

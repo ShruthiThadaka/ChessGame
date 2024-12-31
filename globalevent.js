@@ -27,97 +27,187 @@ let hightlight_state = false;
 let inTurn = "white";
 
 
+// function changeTurn() {
+//     const turnIndicator = document.getElementById("turn-indicator");
+   
+//     inTurn = inTurn === "white" ? "black" : "white";
+//     if (turnIndicator) {
+//         turnIndicator.textContent = `It is ${inTurn.charAt(0).toUpperCase() + inTurn.slice(1)}'s turn`;
+//     }
+    
+// }
+
 function changeTurn() {
     const turnIndicator = document.getElementById("turn-indicator");
-   
+
     inTurn = inTurn === "white" ? "black" : "white";
+
     if (turnIndicator) {
         turnIndicator.textContent = `It is ${inTurn.charAt(0).toUpperCase() + inTurn.slice(1)}'s turn`;
+        
+        // Update classes for styling
+        turnIndicator.classList.remove("white-turn", "black-turn");
+        turnIndicator.classList.add(`${inTurn}-turn`);
     }
-    
 }
+
+// function checkForKingCapture() {
+//     const whiteKingPosition = globalPiece.white_king.current_position;
+//     const blackKingPosition = globalPiece.black_king.current_position;
+
+//     if (!whiteKingPosition) {
+//         alert("Game Over! Black wins by capturing the White King.");
+//         endGame("black"); // Function to handle game end
+//     } else if (!blackKingPosition) {
+//         alert("Game Over! White wins by capturing the Black King.");
+//         endGame("white"); // Function to handle game end
+//     }
+// }
+
+// function endGame(winner) {
+//     // Perform any cleanup or game-ending logic
+//     const win = document.createElement("h1");
+//     win.classList.add("winner")
+//     win.textContent = `Game ended. ${winner} wins!`
+//     // Redirect to a summary page, restart the game, or exit as needed
+//     // Example: window.location.reload(); // Restart the game
+// }
 
 function checkForKingCapture() {
     const whiteKingPosition = globalPiece.white_king.current_position;
     const blackKingPosition = globalPiece.black_king.current_position;
 
     if (!whiteKingPosition) {
-        alert("Game Over! Black wins by capturing the White King.");
-        endGame("black"); // Function to handle game end
+        displayWinner("Black"); // Display the winner on the screen
     } else if (!blackKingPosition) {
-        alert("Game Over! White wins by capturing the Black King.");
-        endGame("white"); // Function to handle game end
+        displayWinner("White"); // Display the winner on the screen
     }
 }
 
-function endGame(winner) {
-    // Perform any cleanup or game-ending logic
-    console.log(`Game ended. ${winner} wins!`);
-    // Redirect to a summary page, restart the game, or exit as needed
-    // Example: window.location.reload(); // Restart the game
+function displayWinner(winner) {
+    // Create an overlay
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    overlay.style.display = "flex";
+    overlay.style.justifyContent = "center";
+    overlay.style.alignItems = "center";
+    overlay.style.zIndex = 1000;
+
+    // Create the winner message
+    const winnerMessage = document.createElement("div");
+    winnerMessage.style.backgroundColor = "#fff";
+    winnerMessage.style.padding = "50px";
+    winnerMessage.style.borderRadius = "10px";
+    winnerMessage.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.5)";
+    winnerMessage.style.textAlign = "center";
+    winnerMessage.style.fontFamily = "'Arial', sans-serif";
+
+    // Winner text
+    const winnerText = document.createElement("h1");
+    winnerText.textContent = `🎉 Game Over! ${winner} Wins! 🎉`;
+    winnerText.style.fontSize = "2.5rem";
+    winnerText.style.color = "#333";
+    winnerText.style.marginBottom = "20px";
+
+    // Restart button
+    const restartButton = document.createElement("button");
+    restartButton.textContent = "Restart Game";
+    restartButton.style.padding = "10px 20px";
+    restartButton.style.fontSize = "1.2rem";
+    restartButton.style.color = "#fff";
+    restartButton.style.backgroundColor = "#007bff";
+    restartButton.style.border = "none";
+    restartButton.style.borderRadius = "5px";
+    restartButton.style.cursor = "pointer";
+    restartButton.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.3)";
+    restartButton.style.transition = "all 0.3s";
+    restartButton.addEventListener("mouseover", () => {
+        restartButton.style.backgroundColor = "#0056b3";
+    });
+    restartButton.addEventListener("mouseout", () => {
+        restartButton.style.backgroundColor = "#007bff";
+    });
+    restartButton.addEventListener("click", () => {
+        window.location.reload(); // Restart the game
+    });
+
+    // Append text and button to the winner message
+    winnerMessage.appendChild(winnerText);
+    winnerMessage.appendChild(restartButton);
+
+    // Append winner message to the overlay
+    overlay.appendChild(winnerMessage);
+
+    // Append overlay to the body
+    document.body.appendChild(overlay);
 }
 
-function checkForCheck() {
-    if (inTurn === "black") {
-        const whiteKingCurrentPosition = globalPiece.white_king.current_position;
-        const knight_1 = globalPiece.black_knight_1.current_position;
-        const knight_2 = globalPiece.black_knight_2.current_position;
-        const king = globalPiece.black_king.current_position;
-        const bishop_1 = globalPiece.black_bishop_1.current_position;
-        const bishop_2 = globalPiece.black_bishop_2.current_position;
-        const rook_1 = globalPiece.black_rook_1.current_position;
-        const rook_2 = globalPiece.black_rook_2.current_position;
-        const queen = globalPiece.black_queen.current_position;
+// function checkForCheck() {
+//     if (inTurn === "black") {
+//         const whiteKingCurrentPosition = globalPiece.white_king.current_position;
+//         const knight_1 = globalPiece.black_knight_1.current_position;
+//         const knight_2 = globalPiece.black_knight_2.current_position;
+//         const king = globalPiece.black_king.current_position;
+//         const bishop_1 = globalPiece.black_bishop_1.current_position;
+//         const bishop_2 = globalPiece.black_bishop_2.current_position;
+//         const rook_1 = globalPiece.black_rook_1.current_position;
+//         const rook_2 = globalPiece.black_rook_2.current_position;
+//         const queen = globalPiece.black_queen.current_position;
 
-        let finalCheckList = [];
-        finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
-        finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
-        finalCheckList.push(giveKingCaptureIds(king, inTurn));
-        finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
-        finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
-        finalCheckList.push(giveRookCaptureIds(rook_1, inTurn));
-        finalCheckList.push(giveRookCaptureIds(rook_2, inTurn));
-        finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
+//         let finalCheckList = [];
+//         finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
+//         finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
+//         finalCheckList.push(giveKingCaptureIds(king, inTurn));
+//         finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
+//         finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
+//         finalCheckList.push(giveRookCaptureIds(rook_1, inTurn));
+//         finalCheckList.push(giveRookCaptureIds(rook_2, inTurn));
+//         finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
 
-        finalCheckList = finalCheckList.flat();
-        const checkOrNot = finalCheckList.find(
-            (element) => element === whiteKingCurrentPosition
-        );
+//         finalCheckList = finalCheckList.flat();
+//         const checkOrNot = finalCheckList.find(
+//             (element) => element === whiteKingCurrentPosition
+//         );
 
-        if (checkOrNot) {
-            alert("wite")
-        }
-    } else {
-        const blackKingCurrentPosition = globalPiece.black_king.current_position;
-        const knight_1 = globalPiece.white_knight_1.current_position;
-        const knight_2 = globalPiece.white_knight_2.current_position;
-        const king = globalPiece.white_king.current_position;
-        const bishop_1 = globalPiece.white_bishop_1.current_position;
-        const bishop_2 = globalPiece.white_bishop_2.current_position;
-        const rook_1 = globalPiece.white_rook_1.current_position;
-        const rook_2 = globalPiece.white_rook_2.current_position;
-        const queen = globalPiece.white_queen.current_position;
+//         if (checkOrNot) {
+//             alert("wite")
+//         }
+//     } else {
+//         const blackKingCurrentPosition = globalPiece.black_king.current_position;
+//         const knight_1 = globalPiece.white_knight_1.current_position;
+//         const knight_2 = globalPiece.white_knight_2.current_position;
+//         const king = globalPiece.white_king.current_position;
+//         const bishop_1 = globalPiece.white_bishop_1.current_position;
+//         const bishop_2 = globalPiece.white_bishop_2.current_position;
+//         const rook_1 = globalPiece.white_rook_1.current_position;
+//         const rook_2 = globalPiece.white_rook_2.current_position;
+//         const queen = globalPiece.white_queen.current_position;
 
-        let finalCheckList = [];
-        finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
-        finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
-        finalCheckList.push(giveKingCaptureIds(king, inTurn));
-        finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
-        finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
-        finalCheckList.push(giveRookCaptureIds(rook_1, inTurn));
-        finalCheckList.push(giveRookCaptureIds(rook_2, inTurn));
-        finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
+//         let finalCheckList = [];
+//         finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
+//         finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
+//         finalCheckList.push(giveKingCaptureIds(king, inTurn));
+//         finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
+//         finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
+//         finalCheckList.push(giveRookCaptureIds(rook_1, inTurn));
+//         finalCheckList.push(giveRookCaptureIds(rook_2, inTurn));
+//         finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
 
-        finalCheckList = finalCheckList.flat();
-        const checkOrNot = finalCheckList.find(
-            (element) => element === blackKingCurrentPosition
-        );
+//         finalCheckList = finalCheckList.flat();
+//         const checkOrNot = finalCheckList.find(
+//             (element) => element === blackKingCurrentPosition
+//         );
 
-        if (checkOrNot) {
-            alert("black")
-        }
-    }
-}
+//         if (checkOrNot) {
+//             alert("black")
+//         }
+//     }
+// }
 
 // function checkForOwnCheck(newPosition, pieceMoved) {
 //     const currentTurn = inTurn; // Who is making the move
@@ -187,7 +277,93 @@ function checkForCheck() {
 //         alert(`${currentTurn} king is in check!`);
 //     }
 // }
+function checkForCheck() {
+    // Function to display a check message on the UI
+    function displayCheckMessage(color) {
+        // Check if the check message already exists
+        let checkMessage = document.getElementById("check-message");
+        if (!checkMessage) {
+            checkMessage = document.createElement("div");
+            checkMessage.id = "check-message";
+            checkMessage.style.position = "fixed";
+            checkMessage.style.top = "20px";
+            checkMessage.style.right = "20px";
+            checkMessage.style.padding = "10px 20px";
+            checkMessage.style.backgroundColor = color === "black" ? "#ffcccc" : "#cce5ff";
+            checkMessage.style.color = color === "black" ? "#cc0000" : "#0056b3";
+            checkMessage.style.border = "2px solid";
+            checkMessage.style.borderColor = color === "black" ? "#cc0000" : "#0056b3";
+            checkMessage.style.borderRadius = "5px";
+            checkMessage.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+            checkMessage.style.fontSize = "1.2rem";
+            checkMessage.style.fontWeight = "bold";
+            checkMessage.style.zIndex = 1000;
+            document.body.appendChild(checkMessage);
+        }
+        // Set the text content
+        checkMessage.textContent = `${color.toUpperCase()} is in Check!`;
+    }
 
+    if (inTurn === "black") {
+        const whiteKingCurrentPosition = globalPiece.white_king.current_position;
+        const knight_1 = globalPiece.black_knight_1.current_position;
+        const knight_2 = globalPiece.black_knight_2.current_position;
+        const king = globalPiece.black_king.current_position;
+        const bishop_1 = globalPiece.black_bishop_1.current_position;
+        const bishop_2 = globalPiece.black_bishop_2.current_position;
+        const rook_1 = globalPiece.black_rook_1.current_position;
+        const rook_2 = globalPiece.black_rook_2.current_position;
+        const queen = globalPiece.black_queen.current_position;
+
+        let finalCheckList = [];
+        finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
+        finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
+        finalCheckList.push(giveKingCaptureIds(king, inTurn));
+        finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
+        finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
+        finalCheckList.push(giveRookCaptureIds(rook_1, inTurn));
+        finalCheckList.push(giveRookCaptureIds(rook_2, inTurn));
+        finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
+
+        finalCheckList = finalCheckList.flat();
+        const checkOrNot = finalCheckList.find(
+            (element) => element === whiteKingCurrentPosition
+        );
+
+        if (checkOrNot) {
+            displayCheckMessage("white");
+        }
+    } else {
+        const blackKingCurrentPosition = globalPiece.black_king.current_position;
+        const knight_1 = globalPiece.white_knight_1.current_position;
+        const knight_2 = globalPiece.white_knight_2.current_position;
+        const king = globalPiece.white_king.current_position;
+        const bishop_1 = globalPiece.white_bishop_1.current_position;
+        const bishop_2 = globalPiece.white_bishop_2.current_position;
+        const rook_1 = globalPiece.white_rook_1.current_position;
+        const rook_2 = globalPiece.white_rook_2.current_position;
+        const queen = globalPiece.white_queen.current_position;
+
+        let finalCheckList = [];
+        finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
+        finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
+        finalCheckList.push(giveKingCaptureIds(king, inTurn));
+        finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
+        finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
+        finalCheckList.push(giveRookCaptureIds(rook_1, inTurn));
+        finalCheckList.push(giveRookCaptureIds(rook_2, inTurn));
+        finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
+
+        finalCheckList = finalCheckList.flat();
+        const checkOrNot = finalCheckList.find(
+            (element) => element === blackKingCurrentPosition
+        );
+
+        if (checkOrNot) {
+            displayCheckMessage("black");
+        }
+    }
+}
 
 function captureInTurn(square) {
     const piece = square.piece;
