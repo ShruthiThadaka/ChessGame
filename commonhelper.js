@@ -7,6 +7,8 @@ function checkPieceofOpponentOnElement(id, color) {
 
   const element = keySquareMapper[id];
 
+  if (!element) return false;
+
   if (element.piece && element.piece.piece_name.includes(opponentColor)) {
     const el = document.getElementById(id);
     el.classList.add("captureColor");

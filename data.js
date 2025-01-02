@@ -4,8 +4,6 @@ import { globalState } from "./script.js";
 // for each square
 function Square(color, id, piece) {
 
- 
-
   const deHighlight = function(){}
 
   return { color, id, piece };
