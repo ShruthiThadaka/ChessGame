@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body class="d-flex">
+    <div id="inputs">
+        <p id="name1"></p>
+        <p id="name2"></p>
+    </div>
     <div id="root"></div>
     <div id="move_logger">
         <ol>
@@ -15,15 +21,26 @@
                 <span>d4</span>
             </li> -->
         </ol>
-        <div id="turn-indicator" style="color: white; font-size: 20px; margin-bottom: 10px; display: block !important; margin-left: 10px;">
+        <div id="turn-indicator"
+            style="color: white; font-size: 20px; margin-bottom: 10px; display: block !important; margin-left: 10px;">
             It is White's turn
         </div>
-        
+
     </div>
-    
+
     <div>
         <button id="restart">Restart</button>
     </div>
-    <script type="module" src="./script.js"></script>
+    <script type="module" src="./script.js">
+        const getusername = localStorage.getItem("data");
+        const parsedData = JSON.parse(getusername);
+        if (parsedData.player1 == player1.value && parsedData.player2 == player2.value) {
+            const player1 = document.getElementById("name1")
+            const player2 = document.getElementById("name2")
+            player1.textContent = parsedData.player1;
+            player2.textContent = parsedData.player2;
+        }
+    </script>
 </body>
+
 </html>

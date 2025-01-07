@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
+            gap: 10%;
             height: 100vh;
+            width: 100%;
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
             background-image: url("https://images.pexels.com/photos/277124/pexels-photo-277124.jpeg");
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
+
         }
 
         #btn {
@@ -25,7 +30,6 @@
             font-size: 18px;
             /* background-color: #00ff11; */
             background-color: #00b34e;
-
             color: red;
             border: none;
             border-radius: 5px;
@@ -40,15 +44,50 @@
             color: black;
         }
 
+        #player1,
+        #player2 {
+            border: none;
+            border-radius: 8px;
+            padding: 5%;
+            margin: 2%;
+            height: 100%;
+
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+        }
+
+        label {
+            color: rgba(242, 223, 223, 0.629);
+        }
     </style>
 </head>
+
 <body>
+    <div class="form">
+        <label for="player1">Player 1:</label>
+        <input type="text" id="player1" placeholder="Enter player 1 name" required>
+        <label for="player2">Player 2:</label>
+        <input type="text" id="player2" placeholder="Enter player 2 name" required>
+    </div>
     <button id="btn">Start</button>
     <script>
         const btn = document.getElementById("btn");
         btn.addEventListener("click", () => {
-            window.location.href = "index1.html";
+            const player1 = document.getElementById("player1").value;
+            const player2 = document.getElementById("player2").value;
+            const obj = {
+                player1: player1,
+                player2: player2,
+            }
+            localStorage.setItem("data", JSON.stringify(obj));
+            window.location.href = "./index1.html";
         });
+
     </script>
 </body>
+
 </html>

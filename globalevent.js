@@ -26,17 +26,6 @@ import pawnPromotion from "./modalCreator.js";
 let hightlight_state = false;
 let inTurn = "white";
 
-
-// function changeTurn() {
-//     const turnIndicator = document.getElementById("turn-indicator");
-   
-//     inTurn = inTurn === "white" ? "black" : "white";
-//     if (turnIndicator) {
-//         turnIndicator.textContent = `It is ${inTurn.charAt(0).toUpperCase() + inTurn.slice(1)}'s turn`;
-//     }
-    
-// }
-
 function changeTurn() {
     const turnIndicator = document.getElementById("turn-indicator");
 
@@ -44,34 +33,13 @@ function changeTurn() {
 
     if (turnIndicator) {
         turnIndicator.textContent = `It is ${inTurn.charAt(0).toUpperCase() + inTurn.slice(1)}'s turn`;
-        
+
         // Update classes for styling
         turnIndicator.classList.remove("white-turn", "black-turn");
         turnIndicator.classList.add(`${inTurn}-turn`);
     }
 }
 
-// function checkForKingCapture() {
-//     const whiteKingPosition = globalPiece.white_king.current_position;
-//     const blackKingPosition = globalPiece.black_king.current_position;
-
-//     if (!whiteKingPosition) {
-//         alert("Game Over! Black wins by capturing the White King.");
-//         endGame("black"); // Function to handle game end
-//     } else if (!blackKingPosition) {
-//         alert("Game Over! White wins by capturing the Black King.");
-//         endGame("white"); // Function to handle game end
-//     }
-// }
-
-// function endGame(winner) {
-//     // Perform any cleanup or game-ending logic
-//     const win = document.createElement("h1");
-//     win.classList.add("winner")
-//     win.textContent = `Game ended. ${winner} wins!`
-//     // Redirect to a summary page, restart the game, or exit as needed
-//     // Example: window.location.reload(); // Restart the game
-// }
 
 function checkForKingCapture() {
     const whiteKingPosition = globalPiece.white_king.current_position;
@@ -147,162 +115,41 @@ function displayWinner(winner) {
     document.body.appendChild(overlay);
 }
 
-// function checkForCheck() {
-//     if (inTurn === "black") {
-//         const whiteKingCurrentPosition = globalPiece.white_king.current_position;
-//         const knight_1 = globalPiece.black_knight_1.current_position;
-//         const knight_2 = globalPiece.black_knight_2.current_position;
-//         const king = globalPiece.black_king.current_position;
-//         const bishop_1 = globalPiece.black_bishop_1.current_position;
-//         const bishop_2 = globalPiece.black_bishop_2.current_position;
-//         const rook_1 = globalPiece.black_rook_1.current_position;
-//         const rook_2 = globalPiece.black_rook_2.current_position;
-//         const queen = globalPiece.black_queen.current_position;
-
-//         let finalCheckList = [];
-//         finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
-//         finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
-//         finalCheckList.push(giveKingCaptureIds(king, inTurn));
-//         finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
-//         finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
-//         finalCheckList.push(giveRookCaptureIds(rook_1, inTurn));
-//         finalCheckList.push(giveRookCaptureIds(rook_2, inTurn));
-//         finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
-
-//         finalCheckList = finalCheckList.flat();
-//         const checkOrNot = finalCheckList.find(
-//             (element) => element === whiteKingCurrentPosition
-//         );
-
-//         if (checkOrNot) {
-//             alert("wite")
-//         }
-//     } else {
-//         const blackKingCurrentPosition = globalPiece.black_king.current_position;
-//         const knight_1 = globalPiece.white_knight_1.current_position;
-//         const knight_2 = globalPiece.white_knight_2.current_position;
-//         const king = globalPiece.white_king.current_position;
-//         const bishop_1 = globalPiece.white_bishop_1.current_position;
-//         const bishop_2 = globalPiece.white_bishop_2.current_position;
-//         const rook_1 = globalPiece.white_rook_1.current_position;
-//         const rook_2 = globalPiece.white_rook_2.current_position;
-//         const queen = globalPiece.white_queen.current_position;
-
-//         let finalCheckList = [];
-//         finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
-//         finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
-//         finalCheckList.push(giveKingCaptureIds(king, inTurn));
-//         finalCheckList.push(giveBishopCaptureIds(bishop_1, inTurn));
-//         finalCheckList.push(giveBishopCaptureIds(bishop_2, inTurn));
-//         finalCheckList.push(giveRookCaptureIds(rook_1, inTurn));
-//         finalCheckList.push(giveRookCaptureIds(rook_2, inTurn));
-//         finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
-
-//         finalCheckList = finalCheckList.flat();
-//         const checkOrNot = finalCheckList.find(
-//             (element) => element === blackKingCurrentPosition
-//         );
-
-//         if (checkOrNot) {
-//             alert("black")
-//         }
-//     }
-// }
-
-// function checkForOwnCheck(newPosition, pieceMoved) {
-//     const currentTurn = inTurn; // Who is making the move
-//     const opponentTurn = currentTurn === "black" ? "white" : "black";
-
-//     // Get current king's position based on the turn
-//     const kingCurrentPosition =
-//         currentTurn === "black"
-//             ? globalPiece.black_king.current_position
-//             : globalPiece.white_king.current_position;
-
-//     // Temporarily update the piece's position
-//     const originalPosition = pieceMoved.current_position;
-//     piece.current_position = newPosition;
-
-//     // Get all possible attack positions of the opponent
-//     const opponentPieces = [
-//         globalPiece[`${opponentTurn}_knight_1`],
-//         globalPiece[`${opponentTurn}_knight_2`],
-//         globalPiece[`${opponentTurn}_king`],
-//         globalPiece[`${opponentTurn}_bishop_1`],
-//         globalPiece[`${opponentTurn}_bishop_2`],
-//         globalPiece[`${opponentTurn}_rook_1`],
-//         globalPiece[`${opponentTurn}_rook_2`],
-//         globalPiece[`${opponentTurn}_queen`],
-//     ];
-
-//     let opponentAttackPositions = [];
-//     opponentPieces.forEach((piece) => {
-//         if (piece.current_position) {
-//             if (piece.type === "knight") {
-//                 opponentAttackPositions.push(
-//                     ...giveKnightCaptureIds(piece.current_position, opponentTurn)
-//                 );
-//             } else if (piece.type === "king") {
-//                 opponentAttackPositions.push(
-//                     ...giveKingCaptureIds(piece.current_position, opponentTurn)
-//                 );
-//             } else if (piece.type === "bishop") {
-//                 opponentAttackPositions.push(
-//                     ...giveBishopCaptureIds(piece.current_position, opponentTurn)
-//                 );
-//             } else if (piece.type === "rook") {
-//                 opponentAttackPositions.push(
-//                     ...giveRookCaptureIds(piece.current_position, opponentTurn)
-//                 );
-//             } else if (piece.type === "queen") {
-//                 opponentAttackPositions.push(
-//                     ...giveQueenCaptureIds(piece.current_position, opponentTurn)
-//                 );
-//             }
-//         }
-//     });
-
-//     // Flatten attack positions
-//     opponentAttackPositions = opponentAttackPositions.flat();
-
-//     // Check if the king's current position is under attack
-//     const isCheck = opponentAttackPositions.includes(
-//         currentTurn === "black" ? kingCurrentPosition : newPosition
-//     );
-
-//     // Revert the piece's position back to original
-//     pieceMoved.current_position = originalPosition;
-
-//     if (isCheck) {
-//         alert(`${currentTurn} king is in check!`);
-//     }
-// }
 function checkForCheck() {
     // Function to display a check message on the UI
     function displayCheckMessage(color) {
-        // Check if the check message already exists
         let checkMessage = document.getElementById("check-message");
         if (!checkMessage) {
             checkMessage = document.createElement("div");
             checkMessage.id = "check-message";
-            checkMessage.style.position = "fixed";
-            checkMessage.style.top = "20px";
-            checkMessage.style.right = "20px";
-            checkMessage.style.padding = "10px 20px";
+            checkMessage.style.height30px
+            // checkMessage.style.position = "fixed";
+            // checkMessage.style.top = "20px";
+            // checkMessage.style.right = "20px";
+            // checkMessage.style.padding = "10px 20px";
             checkMessage.style.backgroundColor = color === "black" ? "#ffcccc" : "#cce5ff";
             checkMessage.style.color = color === "black" ? "#cc0000" : "#0056b3";
-            checkMessage.style.border = "2px solid";
+            // checkMessage.style.border = "2px solid";
             checkMessage.style.borderColor = color === "black" ? "#cc0000" : "#0056b3";
-            checkMessage.style.borderRadius = "5px";
-            checkMessage.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
-            checkMessage.style.fontSize = "1.2rem";
-            checkMessage.style.fontWeight = "bold";
-            checkMessage.style.zIndex = 1000;
+            // checkMessage.style.borderRadius = "5px";
+            // checkMessage.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+            // checkMessage.style.fontSize = "1.2rem";
+            // checkMessage.style.fontWeight = "bold";
+            // checkMessage.style.zIndex = 1000;
             document.body.appendChild(checkMessage);
         }
-        // Set the text content
         checkMessage.textContent = `${color.toUpperCase()} is in Check!`;
     }
+
+    // Function to remove the check message from the UI
+    function removeCheckMessage() {
+        const checkMessage = document.getElementById("check-message");
+        if (checkMessage) {
+            checkMessage.remove();
+        }
+    }
+
+    let checkOrNot = false;
 
     if (inTurn === "black") {
         const whiteKingCurrentPosition = globalPiece.white_king.current_position;
@@ -326,12 +173,12 @@ function checkForCheck() {
         finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
 
         finalCheckList = finalCheckList.flat();
-        const checkOrNot = finalCheckList.find(
-            (element) => element === whiteKingCurrentPosition
-        );
+        checkOrNot = finalCheckList.includes(whiteKingCurrentPosition);
 
         if (checkOrNot) {
             displayCheckMessage("white");
+        } else {
+            removeCheckMessage();
         }
     } else {
         const blackKingCurrentPosition = globalPiece.black_king.current_position;
@@ -343,7 +190,7 @@ function checkForCheck() {
         const rook_1 = globalPiece.white_rook_1.current_position;
         const rook_2 = globalPiece.white_rook_2.current_position;
         const queen = globalPiece.white_queen.current_position;
-
+        
         let finalCheckList = [];
         finalCheckList.push(giveKnightCaptureIds(knight_1, inTurn));
         finalCheckList.push(giveKnightCaptureIds(knight_2, inTurn));
@@ -355,12 +202,12 @@ function checkForCheck() {
         finalCheckList.push(giveQueenCaptureIds(queen, inTurn));
 
         finalCheckList = finalCheckList.flat();
-        const checkOrNot = finalCheckList.find(
-            (element) => element === blackKingCurrentPosition
-        );
+        checkOrNot = finalCheckList.includes(blackKingCurrentPosition);
 
         if (checkOrNot) {
             displayCheckMessage("black");
+        } else {
+            removeCheckMessage();
         }
     }
 }
@@ -421,22 +268,22 @@ function moveElement(piece, id, castle) {
         piece.move = true;
 
         if (
-            piece.piece_name.includes("king") && 
+            piece.piece_name.includes("king") &&
             piece.piece_name.includes("black")
         ) {
             if (id === 'c8' || id === 'g8') {
                 let rook = keySquareMapper[id === 'c8' ? 'a8' : 'h8']
-                moveElement(rook.piece, id === 'c8' ? 'd8' : 'f8',true)
+                moveElement(rook.piece, id === 'c8' ? 'd8' : 'f8', true)
             }
         }
 
         if (
-            piece.piece_name.includes("king") && 
+            piece.piece_name.includes("king") &&
             piece.piece_name.includes("white")
         ) {
             if (id === 'c1' || id === 'g1') {
                 let rook = keySquareMapper[id === 'c1' ? 'a1' : 'h1']
-                moveElement(rook.piece, id === 'c1' ? 'd1' : 'f1',true)
+                moveElement(rook.piece, id === 'c1' ? 'd1' : 'f1', true)
             }
         }
     }
@@ -468,12 +315,9 @@ function moveElement(piece, id, castle) {
     }
     checkForKingCapture()
     checkForCheck();
-    if(!castle){
+    if (!castle) {
         changeTurn();
     }
-
-
-    // globalStateRender();
 }
 
 
@@ -729,8 +573,6 @@ function blackBishopClick(square) {
             }
         }
     }
-
-
     globalStateRender();
 }
 

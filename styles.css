@@ -8,6 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     width: fit-content;
+
 }
 
 .squareRow {
@@ -36,34 +37,47 @@ body {
 
 }
 
-.captureColor{
+.captureColor {
     background-color: #ee4b2b;
 }
 
-.highlight{
+.highlight {
     display: block;
     width: 10px;
     height: 10px;
-    margin: 35px 35px;
+    margin: 40% 40%;
     border-radius: 50%;
     background-color: rgb(170, 163, 163);
 }
 
-.d-flex{
+.d-flex {
     display: flex;
     justify-content: center;
     /* text-align: center; */
 }
 
-#move_logger{
+/*#move_logger{
     width: 20vw;
     height: 600px;
     background-color: #262522;
     color: white;
     list-style-type: none;
+}*/
+
+#move_logger {
+    width: 20vw;
+    height: 600px;
+    background-color: inherit;
+    /* Inherits the background color from the parent */
+    color: white;
+    list-style-type: none;
+    border: none;
+    box-shadow: none;
 }
 
-.modal{
+
+
+.modal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,11 +89,11 @@ body {
     left: 0;
 }
 
-.blur{
+.blur {
     filter: blur(18px);
 }
 
-.modal p{
+.modal p {
     font-family: sans-serif;
     font-size: 40px;
     padding: 4px 8px;
@@ -87,13 +101,13 @@ body {
     color: white;
 }
 
-.modal img{
+.modal img {
     box-sizing: border-box;
     border: 5px solid transparent;
     width: 20%;
 }
 
-.modal img:hover{
+.modal img:hover {
     border: 5px solid yellow;
     cursor: pointer;
 }
@@ -117,7 +131,7 @@ body {
     background-color: #5a7a47;
 }
 
-.winner{
+.winner {
     position: absolute;
     color: green;
     display: flex;
@@ -167,20 +181,29 @@ body {
         height: 70px;
     }
 
+    #check-message {
+        margin: 2%;
+    }
+
+    #restart {
+        bottom: -10%;
+    }
+
     /* #move_logger {
         width: 25vw;
         height: 50px;
     } */
 
-   
-    
+
+
 }
 
 /* Tablet View (768px and below) */
 @media (max-width: 768px) {
     body {
-        flex-direction: column; /* Stacks elements vertically */
+        /* flex-direction: column; Stacks elements vertically */
         align-items: center;
+        flex-wrap: wrap;
     }
 
     .square {
@@ -191,19 +214,36 @@ body {
     #move_logger {
         width: 90%;
         height: auto;
-        margin-top: 10px;
+        margin-top: -2%;
     }
 
     #restart {
         margin-top: 10px;
-        align-self: center; /* Center the button for tablet view */
+        position: relative;
+        /* Relative to #check-message */
+        align-self: center;
+        /* Center the button */
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #769656;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #check-message {
+        width: 22%;
+        margin-top: -105%;
+        margin-right: 70%;
     }
 }
 
 /* Mobile View (480px and below) */
 @media (max-width: 480px) {
     body {
-        flex-direction: column; /* Stacks elements vertically */
+        flex-direction: column;
+        /* Stacks elements vertically */
         padding: 10px;
         align-items: center;
     }
@@ -217,13 +257,129 @@ body {
         width: 100%;
         height: auto;
         font-size: 14px;
-        margin-top: 10px;
+        margin-top: -20px;
     }
 
     #restart {
         width: 100%;
-        padding: 15px 0;
+        padding: 10px 10px;
         font-size: 18px;
-        margin-top: 20px;
     }
+
+    #turn-indicator {
+        position: relative;
+    }
+
+    #check-message {
+        margin: 0% 20% !important;
+        padding: 8px !important;
+        width: 50%;
+    }
+
+    #inputs {
+        display: flex;
+    }
+
+    #name1,
+    #name2 {
+        width: 40%;
+        height: 5vh;
+        margin-top: 0px !important;
+        margin-bottom: 20% !important;
+        font-size: 1rem !important;
+    }
+}
+
+#name1 {
+    color: white;
+    background-color: black;
+    padding: 5%;
+    font-size: 1.5rem;
+}
+
+#name2 {
+    color: black;
+    background-color: white;
+    padding: 5%;
+    font-size: 1.5rem;
+    margin-top: 170%;
+}
+
+/* General Styles for #turn-indicator */
+#turn-indicator {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Semi-transparent background */
+    color: white;
+    border-radius: 6px;
+    margin-top: 10px;
+    /* Default margin */
+}
+
+/* Tablet View (768px and below) */
+@media (max-width: 768px) {
+    #turn-indicator {
+        position: relative;
+        /* Default relative positioning */
+        margin-top: -50px !important;
+        width: 50%;
+        margin-left: 30% !important;
+    }
+
+    #root {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 40px;
+        /* Reserve space for the check message */
+    }
+
+    #name1 {
+        color: white;
+        background-color: black;
+        padding: 5%;
+        font-size: 1.2rem;
+        margin-top: -30%;
+    }
+
+    #name2 {
+        color: black;
+        background-color: white;
+        padding: 5%;
+        font-size: 1.2rem;
+        margin-top: 150%;
+    }
+}
+
+/* Mobile View (480px and below) */
+@media (max-width: 480px) {
+    #turn-indicator {
+        position: relative;
+        /* Relative to its parent */
+        margin-top: 10px;
+        margin-bottom: 15px;
+        /* Add spacing below the chessboard */
+    }
+
+    #root {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+        /* Extra space for the check message */
+    }
+}
+
+#check-message {
+    height: 30px !important;
+    padding: 10px 20px;
+    border: 2px solid;
+    border-radius: 5px;
+    box-shadow: "0 4px 8px rgba(0, 0, 0, 0.2)";
+    font-size: "1.2rem";
+    font-weight: "bold";
+    z-index: 1000;
 }
