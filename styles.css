@@ -75,6 +75,24 @@ body {
     box-shadow: none;
 }
 
+.captured-area {
+    padding: 10px;
+    border: 1px solid #ccc;
+    min-height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.captured-piece {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px;
+    font-size: 24px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+}
+
 
 
 .modal {
@@ -112,12 +130,12 @@ body {
     cursor: pointer;
 }
 
-#restart {
+#restart{
     display: block !important;
     position: absolute;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-150%);
     padding: 10px 20px;
     font-size: 16px;
     background-color: #769656;
@@ -127,7 +145,22 @@ body {
     cursor: pointer;
 }
 
-#restart:hover {
+#exit{
+    display: block !important;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(0%);
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #769656;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#restart:hover,#exit:hover {
     background-color: #5a7a47;
 }
 
@@ -157,7 +190,7 @@ body {
     transition: all 0.3s ease-in-out;
 } */
 
-#turn-indicator.white-turn {
+/* #turn-indicator.white-turn {
     background-color: #f9f9f9;
     color: #000000 !important;
     border: 2px solid #dddddd;
@@ -167,7 +200,7 @@ body {
     background-color: #333333;
     color: #ffffff;
     border: 2px solid #555555;
-}
+} */
 
 /* Mini Desktop View (1024px to 1280px) */
 @media (max-width: 1280px) {
@@ -185,8 +218,8 @@ body {
         margin: 2%;
     }
 
-    #restart {
-        bottom: -10%;
+    #restart,#exit {
+        bottom: 0%;
     }
 
     /* #move_logger {
@@ -217,7 +250,7 @@ body {
         margin-top: -2%;
     }
 
-    #restart {
+    #restart,#exit {
         margin-top: 10px;
         position: relative;
         /* Relative to #check-message */
@@ -342,7 +375,7 @@ body {
         background-color: black;
         padding: 5%;
         font-size: 1.2rem;
-        margin-top: -30%;
+        margin-top: 0%;
     }
 
     #name2 {
@@ -350,7 +383,11 @@ body {
         background-color: white;
         padding: 5%;
         font-size: 1.2rem;
-        margin-top: 150%;
+        margin-top: 0%;
+    }
+
+    #inputs{
+        display: flex;
     }
 }
 

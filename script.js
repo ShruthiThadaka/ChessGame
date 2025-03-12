@@ -19,6 +19,10 @@ document.getElementById("restart").addEventListener("click", () => {
 
     window.location.reload()
 })
+document.getElementById("exit").addEventListener("click", () => {
+    window.history.back()
+})
+
 
 // Retrieve player names from localStorage
 const getUsername = localStorage.getItem("data");

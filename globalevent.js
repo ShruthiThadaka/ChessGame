@@ -26,19 +26,47 @@ import pawnPromotion from "./modalCreator.js";
 let hightlight_state = false;
 let inTurn = "white";
 
+// function changeTurn() {
+//     const turnIndicator = document.getElementById("turn-indicator");
+
+//     inTurn = inTurn === "white" ? "black" : "white";
+
+//     if (turnIndicator) {
+//         turnIndicator.textContent = `It is ${inTurn.charAt(0).toUpperCase() + inTurn.slice(1)}'s turn`;
+
+//         // Update classes for styling
+//         turnIndicator.classList.remove("white-turn", "black-turn");
+//         turnIndicator.classList.add(`${inTurn}-turn`);
+//     }
+// }
+
 function changeTurn() {
     const turnIndicator = document.getElementById("turn-indicator");
 
     inTurn = inTurn === "white" ? "black" : "white";
 
     if (turnIndicator) {
+        // Update the text content
         turnIndicator.textContent = `It is ${inTurn.charAt(0).toUpperCase() + inTurn.slice(1)}'s turn`;
 
-        // Update classes for styling
+        // Update the background and text colors dynamically
+        if (inTurn === "white") {
+            turnIndicator.style.backgroundColor = "white"; // White background
+            turnIndicator.style.color = "black";          // Black text
+            turnIndicator.style.border = "2px solid #dddddd"
+        } else {
+            turnIndicator.style.backgroundColor = "black"; // Black background
+            turnIndicator.style.color = "white";          // White text
+            turnIndicator.style.border = "2px solid #555555"
+
+        }
+
+        // Update classes for additional styling (if needed)
         turnIndicator.classList.remove("white-turn", "black-turn");
         turnIndicator.classList.add(`${inTurn}-turn`);
     }
 }
+
 
 
 function checkForKingCapture() {
@@ -261,6 +289,9 @@ function test(piece, id) {
 }
 
 //move element to square with id
+
+// const capturedPieces = { white: [], black: [] }; // Store captured pieces
+
 function moveElement(piece, id, castle) {
     const pawnIsPromoted = checkForPawnPromotion(piece, id);
 
@@ -290,17 +321,25 @@ function moveElement(piece, id, castle) {
 
     const flatData = globalState.flat();
     // console.log(piece)
+    let capturedPiece = null;
+
     flatData.forEach((el) => {
         if (el.id == piece.current_position) {
             delete el.piece;
         }
         if (el.id == id) {
             if (el.piece) {
+                capturedPiece = el.piece; // Store captured piece
+
                 el.piece.current_position = null;
             }
             el.piece = piece;
         }
     });
+
+    if (capturedPiece) {
+        addCapturedPiece(capturedPiece); // Move the captured piece outside the board
+    }
 
     clearHightlight();
     const previousPiece = document.getElementById(piece.current_position);
@@ -318,6 +357,32 @@ function moveElement(piece, id, castle) {
     if (!castle) {
         changeTurn();
     }
+}
+// Function to store and display captured pieces
+function addCapturedPiece(capturedPiece) {
+    const color = capturedPiece.piece_name.includes("white") ? "white" : "black";
+    const opponentColor = color === "white" ? "black" : "white"; // Store captured piece in opponent's section
+
+    const capturedContainer = document.getElementById(`${color}-captured`);
+    if (capturedContainer) {
+        const pieceElement = document.createElement("div");
+        pieceElement.classList.add("captured-piece");
+        pieceElement.innerHTML = capturedPiece.piece_name;
+        capturedContainer.appendChild(pieceElement);
+    }
+}
+// Function to get a symbol or name for a captured piece
+function getPieceSymbol(pieceName) {
+    const symbols = {
+        "pawn": "♙",
+        "rook": "♖",
+        "knight": "♘",
+        "bishop": "♗",
+        "queen": "♕",
+        "king": "♔"
+    };
+    const lowerName = pieceName.toLowerCase().replace("white", "").replace("black", "").trim();
+    return symbols[lowerName] || pieceName; // Default to name if no symbol is found
 }
 
 
